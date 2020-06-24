@@ -12,11 +12,11 @@ import (
 
 func main() {
 	var (
-		token       string
-		databaseURL string
+		token    string
+		database string
 	)
 	flag.StringVar(&token, "t", "", "discord bot token")
-	flag.StringVar(&databaseURL, "d", "", "postgres database url")
+	flag.StringVar(&database, "d", "", "postgres database to connect to")
 	flag.Parse()
 
 	state, err := state.New("Bot " + token)
@@ -24,7 +24,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	dbpool, err := pgxpool.Connect(context.Background(), databaseURL)
+	dbpool, err := pgxpool.Connect(context.Background(), database)
 	if err != nil {
 		log.Fatalln("unable to connect to database:", err)
 	}
